@@ -1,6 +1,8 @@
 <?php 
 include('db.php');
 
+session_start();
+
 $user_id = $_POST['user_id'];
 $school_name = $_POST['school_name'];
 $tree = $_POST['tree'];
@@ -21,7 +23,10 @@ for ($i=0; $i < count($tree); $i++) {
 }
 
 if($result) {
-    echo "Success";
+    $_SESSION['success'] = "Form Submitted!";
+    header('Location: ../treeform.php');
+} else  {
+    $_SESSION['error'] = "Error saving. Please try again!";
 }
 
 

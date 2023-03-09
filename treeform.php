@@ -28,23 +28,23 @@
                 <div class="row">
                     <div class="col-md-12">
 
-                        <!-- <?php 
-                    if(isset($_SESSION['status']))
+                    <?php 
+                    if(isset($_SESSION['success']))
                     {
                         ?>
-                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                            <strong>Hey!</strong> <?php echo $_SESSION['status']; ?>
+                            <div class="alert alert-success mt-3 alert-dismissible fade show" role="alert">
+                            <strong></strong> <?php echo $_SESSION['success']; ?>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         <?php
-                        unset($_SESSION['status']);
+                        unset($_SESSION['success']);
                     }
-                ?> -->
+                ?>
 
-                        <div class="card mt-4">
-                            <div class="card-header">
-                                <h4>Tree Locator Form
-                                    <a href="javascript:void(0)" class="add-more-form float-end btn btn-primary">ADD
+                        <div class="card mt-4 mb-3">
+                            <div class="card-header bg-primary">
+                                <h4>
+                                    <a id="add-row" class="add-more-form float-end btn btn-primary">ADD
                                         MORE</a>
                                 </h4>
                             </div>
@@ -181,10 +181,6 @@
                                             <input class="btn btn-success" type="submit" name="save" id="save"
                                                 value="Save Data">
                                         </form>
-                                        <button type="button"
-                                            class="text-dark btn text-sm col-1 mb-3 mx-auto float-right"
-                                            style="font-size: 15px;" id="add-row"><i class="fa fa-plus"></i>New
-                                            Row</button>
                                     </div>
                                 </div>
                             </div>
