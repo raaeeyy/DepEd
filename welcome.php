@@ -19,8 +19,11 @@ include 'config.php';
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
     <title>TREE</title>
 </head>
 
@@ -32,62 +35,141 @@ include 'config.php';
 
         if (mysqli_num_rows($query) > 0) {
             $row2 = mysqli_fetch_assoc($query);
-
             $name = $row2['name'];
+            $type = $row2['status'];
         } ?>
 
 
         <div class="col bg-white mt-3">
-            <b class="text-lg text-uppercase text-primary">Welcome <?php echo $name ?> </b>
+            <b class="text-lg text-uppercase text-primary">Welcome
+                <?php echo $name ?>
+            </b>
         </div>
 
 
         <div class="card mt-3 bg-white">
             <div class="card-header bg-dark text-white
             ">
-                <b>TREE</b>
+                <b>TREE MONITORING</b>
+                <a href="treeform.php" class="btn btn-sm btn-success float-rigth">Add New Entry</a>
             </div>
             <div class="card-body">
-                <table class="table table-bordered" id="example">
+                <?php if ($type == "coordinator"): ?>
+                    <table class="table table-bordered" id="example">
 
-                    <thead class="text-center">
-                        <tr>
-                            <th>Tree</th>
-                            <th>Type</th>
-                            <th>Status</th>
-                            <th>Longitude</th>
-                            <th>Latitude</th>
-                            <th>Location</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-center">
-                        <?php
-                        include('include/db.php');
-                        // SQL query to retrieve all users
-                        $sql = "SELECT * FROM tree WHERE user_id = '$name'";
-                        $result = $conn->query($sql);
-
-                        // Close database connection
-                        $conn->close();
-                        ?>
-                        <?php while ($row = $result->fetch_assoc()) : ?>
+                        <thead class="text-center">
                             <tr>
-                                <td><?php echo $row["tree"]; ?></td>
-                                <td><?php echo $row["tree_type"]; ?></td>
-                                <td><?php echo $row["tree_status"]; ?></td>
-                                <td><?php echo $row["longitude"]; ?></td>
-                                <td><?php echo $row["latitude"]; ?></td>
-                                <td><?php echo $row["location"]; ?></td>
+                                <th>Tree</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Longitude</th>
+                                <th>Latitude</th>
+                                <th>Location</th>
                             </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="text-center">
+
+                            <!-- if not admin it will only display the current user logged in data -->
+
+                            <?php
+                            include('include/db.php');
+                            // SQL query to retrieve all users
+                            $sql = "SELECT * FROM tree WHERE user_id = '$name'";
+                            $result = $conn->query($sql);
+
+                            // Close database connection
+                            $conn->close();
+                            ?>
+                            <?php while ($row = $result->fetch_assoc()): ?>
+                                <tr>
+                                    <td>
+                                        <?php echo $row["tree"]; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row["tree_type"]; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row["tree_status"]; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row["longitude"]; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row["latitude"]; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row["location"]; ?>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                <?php endif; ?>
+
+                <!-- if admin it will display all the data -->
+                <?php if ($type == "administrator"): ?>
+                    <table class="table table-bordered" id="example">
+
+                        <thead class="text-center">
+                            <tr>
+                                <th>School</th>
+                                <th>Tree</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Longitude</th>
+                                <th>Latitude</th>
+                                <th>Location</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+
+                            <!-- if not admin it will only display the current user logged in data -->
+
+                            <?php   
+                            // SQL query to retrieve all users
+                            $sql3 = "SELECT * FROM tree ";
+                            $result3 = $conn->query($sql3);
+
+                            // Close database connection
+                            $conn->close();
+                            ?>
+                            <?php while ($row3 = $result3->fetch_assoc()): ?>
+                                <tr>
+                                    <td>
+                                        <?php echo $name ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row3["tree"]; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row3["tree_type"]; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row3["tree_status"]; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row3["longitude"]; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row3["latitude"]; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row3["location"]; ?>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+
+
+                        </tbody>
+                    </table>
+                <?php endif; ?>
+
             </div>
         </div>
     </section>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#example').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
